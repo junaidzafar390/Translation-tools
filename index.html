@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Language Translation Tool</title>
+    <link rel="stylesheet" href="style-ml.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-brain"></i> ML Language Translation Tool</h1>
+            <p>Translate with AI-powered insights and analysis</p>
+        </header>
+
+        <!-- Main Translation Section -->
+        <div class="translation-wrapper">
+            <!-- Left Panel - Source Language -->
+            <div class="panel left-panel">
+                <div class="panel-header">
+                    <label for="source-language">From</label>
+                    <select id="source-language" class="language-select">
+                        <option value="en">English</option>
+                        <option value="es">Spanish (Español)</option>
+                        <option value="fr">French (Français)</option>
+                        <option value="de">German (Deutsch)</option>
+                        <option value="it">Italian (Italiano)</option>
+                        <option value="pt">Portuguese (Português)</option>
+                        <option value="ru">Russian (Русский)</option>
+                        <option value="ja">Japanese (日本語)</option>
+                        <option value="ko">Korean (한국어)</option>
+                        <option value="zh">Chinese (中文)</option>
+                        <option value="ar">Arabic (العربية)</option>
+                        <option value="hi">Hindi (हिन्दी)</option>
+                        <option value="tr">Turkish (Türkçe)</option>
+                        <option value="pl">Polish (Polski)</option>
+                        <option value="vi">Vietnamese (Tiếng Việt)</option>
+                        <option value="th">Thai (ไทย)</option>
+                        <option value="id">Indonesian (Bahasa Indonesia)</option>
+                        <option value="nl">Dutch (Nederlands)</option>
+                        <option value="sv">Swedish (Svenska)</option>
+                        <option value="no">Norwegian (Norsk)</option>
+                        <option value="da">Danish (Dansk)</option>
+                        <option value="fi">Finnish (Suomi)</option>
+                        <option value="uk">Ukrainian (Українська)</option>
+                        <option value="el">Greek (Ελληνικά)</option>
+                        <option value="he">Hebrew (עברית)</option>
+                        <option value="fa">Persian (فارسی)</option>
+                    </select>
+                </div>
+
+                <!-- Language Detection Section -->
+                <div class="detection-section">
+                    <button id="auto-detect-btn" class="btn btn-detect" title="Auto-detect language">
+                        <i class="fas fa-magic"></i> Auto-Detect
+                    </button>
+                    <div id="detected-lang" class="detected-lang hidden">
+                        <span id="detected-lang-text">Detected: English (99%)</span>
+                    </div>
+                </div>
+
+                <textarea id="source-text" class="text-area" placeholder="Enter text to translate..."></textarea>
+                <div class="panel-footer">
+                    <span id="char-count" class="char-count">0 / 5000</span>
+                    <button id="copy-source" class="btn btn-small" title="Copy text">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <button id="clear-source" class="btn btn-small" title="Clear text">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Swap Button -->
+            <div class="swap-container">
+                <button id="swap-btn" class="btn btn-swap" title="Swap languages">
+                    <i class="fas fa-exchange-alt"></i>
+                </button>
+            </div>
+
+            <!-- Right Panel - Target Language -->
+            <div class="panel right-panel">
+                <div class="panel-header">
+                    <label for="target-language">To</label>
+                    <select id="target-language" class="language-select">
+                        <option value="en">English</option>
+                        <option value="es" selected>Spanish (Español)</option>
+                        <option value="fr">French (Français)</option>
+                        <option value="de">German (Deutsch)</option>
+                        <option value="it">Italian (Italiano)</option>
+                        <option value="pt">Portuguese (Português)</option>
+                        <option value="ru">Russian (Русский)</option>
+                        <option value="ja">Japanese (日本語)</option>
+                        <option value="ko">Korean (한국어)</option>
+                        <option value="zh">Chinese (中文)</option>
+                        <option value="ar">Arabic (العربية)</option>
+                        <option value="hi">Hindi (हिन्दی)</option>
+                        <option value="tr">Turkish (Türkçe)</option>
+                        <option value="pl">Polish (Polski)</option>
+                        <option value="vi">Vietnamese (Tiếng Việt)</option>
+                        <option value="th">Thai (ไทย)</option>
+                        <option value="id">Indonesian (Bahasa Indonesia)</option>
+                        <option value="nl">Dutch (Nederlands)</option>
+                        <option value="sv">Swedish (Svenska)</option>
+                        <option value="no">Norwegian (Norsk)</option>
+                        <option value="da">Danish (Dansk)</option>
+                        <option value="fi">Finnish (Suomi)</option>
+                        <option value="uk">Ukrainian (Українська)</option>
+                        <option value="el">Greek (Ελληνικά)</option>
+                        <option value="he">Hebrew (עברית)</option>
+                        <option value="fa">Persian (فارسی)</option>
+                    </select>
+                </div>
+                <textarea id="target-text" class="text-area" placeholder="Translation will appear here..." readonly></textarea>
+                <div class="panel-footer">
+                    <button id="copy-target" class="btn btn-small" title="Copy translation">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <button id="speak-target" class="btn btn-small" title="Speak translation">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                    <button id="download-target" class="btn btn-small" title="Download translation">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="button-group">
+            <button id="translate-btn" class="btn btn-primary">
+                <i class="fas fa-language"></i> Translate
+            </button>
+            <button id="ml-insights-btn" class="btn btn-ml">
+                <i class="fas fa-brain"></i> ML Insights
+            </button>
+        </div>
+
+        <!-- ML Insights Panel -->
+        <div id="ml-panel" class="ml-panel hidden">
+            <div class="ml-panel-header">
+                <h2><i class="fas fa-brain"></i> AI Analysis & Insights</h2>
+                <button id="close-ml-panel" class="btn btn-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="ml-panel-content">
+                <!-- Language Detection Tab -->
+                <div class="ml-tab-section">
+                    <h3><i class="fas fa-globe"></i> Language Detection</h3>
+                    <div id="language-detection" class="ml-card">
+                        <p>Enter text to analyze detected language</p>
+                    </div>
+                </div>
+
+                <!-- Sentiment Analysis Tab -->
+                <div class="ml-tab-section">
+                    <h3><i class="fas fa-heart"></i> Sentiment Analysis</h3>
+                    <div id="sentiment-analysis" class="ml-card">
+                        <div id="sentiment-result"></div>
+                        <div id="sentiment-details" class="sentiment-details"></div>
+                    </div>
+                </div>
+
+                <!-- Text Statistics Tab -->
+                <div class="ml-tab-section">
+                    <h3><i class="fas fa-chart-bar"></i> Text Statistics</h3>
+                    <div id="text-statistics" class="ml-card">
+                        <div class="stats-grid" id="stats-grid"></div>
+                    </div>
+                </div>
+
+                <!-- Translation Quality Tab -->
+                <div class="ml-tab-section">
+                    <h3><i class="fas fa-star"></i> Translation Quality</h3>
+                    <div id="translation-quality" class="ml-card">
+                        <p>Translate text to see quality metrics</p>
+                    </div>
+                </div>
+
+                <!-- Named Entities Tab -->
+                <div class="ml-tab-section">
+                    <h3><i class="fas fa-tags"></i> Named Entities</h3>
+                    <div id="named-entities" class="ml-card">
+                        <p>Enter text to extract entities</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Processing...</p>
+        </div>
+
+        <!-- Notification -->
+        <div id="notification" class="notification hidden"></div>
+    </div>
+
+    <script src="ml-model.js"></script>
+    <script src="script-ml.js"></script>
+</body>
+</html>
